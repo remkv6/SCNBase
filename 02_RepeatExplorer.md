@@ -68,5 +68,5 @@ awk 'NR!=196117' sorted.Galaxy.fix.gff3 |grep -v "everything" >TEST
 module load genometools
 gt gff3 -sortlines -tidy TEST >repeatexplorer.gff
 
-d
+
 ```
