@@ -92,8 +92,16 @@ module load bedtools2
 bedtools genomecov -ibam ${R1_FQ%.*}_sorted.bam -bga -g ${GENOME} >${R1_FQ%.*}_sorted.bam.bdg
 ./bedGraphToBigWig ${R1_FQ%.*}_sorted.bam.bdg Chr.sizes ${R1_FQ%.*}_sorted.bw
 
-###################################################################################################
-
+```
+### Create Soybean + SCN database
+```
+#/work/GIF/remkv6/Baum/05_738NewAnalyses/04_NewRNAseqOnlineAlignment4Jbrowse/01_trim
+cat GCF_000004515.5_Glycine_max_v2.1_genomic.fna genome738sl.polished.mitoFixed.fa >SoySCNGenomes.fasta
+hisat2-build SoySCNGenomes.fasta SoySCNGenomes
+```
+### Create run script
+```
+#/work/GIF/remkv6/Baum/05_738NewAnalyses/04_NewRNAseqOnlineAlignment4Jbrowse/01_trim
 
 sh runFeatureCounts.sh SRR5447108_1.fastq.gz SRR5447108_2.fastq.gz  /work/GIF/remkv6/Baum/05_738NewAnalyses/04_NewRNAseqOnlineAlignment4Jbrowse/01_trim genome738sl.polished.mitoFixed.fa fixed.augustus.gff3
 sh runFeatureCounts.sh SRR5447109_1.fastq.gz SRR5447109_2.fastq.gz  /work/GIF/remkv6/Baum/05_738NewAnalyses/04_NewRNAseqOnlineAlignment4Jbrowse/01_trim genome738sl.polished.mitoFixed.fa fixed.augustus.gff3
