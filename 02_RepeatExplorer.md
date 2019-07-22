@@ -59,7 +59,7 @@ gmap -D /data013/GIF/remkv6/Baum/CamTechGenomeComparison/43_RepeatExpClusters/ -
 ```
 
 
-How do the clusters overlap with real repeats in the genome?
+## How do the clusters overlap with real repeats in the genome?
 ```
 #Made correctly formatted gff for JBrowse and for a bedtools intersect on known repeats in the genome.
 less GMAP-SCN-RepClust.o172605.condo|sed 's/|quiver//g' |sort -k1,1 -k 4,4n |grep -v "###" |grep -v "======" |grep -v "#" >sorted.Galaxy.gff3
@@ -67,6 +67,17 @@ awk 'NF==9' sorted.Galaxy.gff3 >sorted.Galaxy.fix.gff3
 awk 'NR!=196117' sorted.Galaxy.fix.gff3 |grep -v "everything" >TEST
 module load genometools
 gt gff3 -sortlines -tidy TEST >repeatexplorer.gff
+
+
+```
+
+### what proportion of these repeatexplorer repeats are actually in the TN10 genome?
+```
+#/work/GIF/remkv6/Baum/CamTechGenomeComparison/43_RepeatExpClusters
+
+#provides three columns, bp of repeat, proportion of genome, repeat name
+less repeatexplorer.gff3 |grep -v "#" |awk '$3=="gene"' |sed 's/Name=/\t/g' |sed 's/Contig/\t/g' |cut -f 4,5,10 |awk '{if ($1>$2) {print $1-$2,$3} else {print $2-$1,$3}}' |sort -k2,2 |awk -v name=0 -v total=0 '{if(NR==1) {name=$2} else if (name==$2) {total=total+$1} else if(name!=$2) {print name,total; total=0; name=$2}}' |sort -k1,1V |awk 'NR<548' |awk '{print $2,$2/1238464.05,$1}' >PercentGenomeComprisedCLs.list
+
 
 
 ```

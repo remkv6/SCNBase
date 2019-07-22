@@ -290,3 +290,15 @@ grep "ransposase" ReworkedFunctionalAugustus.gff3 |awk '$3=="gene"' |wc
  cat <(grep "ransposase" ReworkedFunctionalAugustus.gff3 |awk '$3=="gene"') <(grep "tegrase" ReworkedFunctionalAugustus.gff3 |awk '$3=="gene"' ) <( grep "Reverse-transcriptase" ReworkedFunctionalAugustus.gff3 |awk '$3=="gene"') |sort|uniq|wc
    1853   16677 1178140
 ```
+### Transcripts of secreted peptides
+```
+#/work/GIF/remkv6/Baum/CamTechGenomeComparison/58_Renamatorium/49_NewSecretedTrack
+awk '$3=="mRNA"' ReworkedFunctionalAugustusSecreted_sorted.gff |cut -f 9 |sed 's/ID=//g' |sed 's/;/\t/1' |awk '{print $1}' |cdbyank ../1_genomeNgff/RetryRename/FinalAugustus.cds.fasta.cidx >SecretedTranscripts.fasta
+
+```
+
+### Effector genes
+```
+#80 known effectors
+/work/GIF/remkv6/Baum/CamTechGenomeComparison/29_effectorMapping/effector.fa
+```
